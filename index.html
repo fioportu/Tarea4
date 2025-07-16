@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="stylesheet" href="css/pico.min.css" />
+    <script src="js/jquery.min.js"></script>
+    <title>Tarea Programada 4</title>
+  </head>
+  <body>
+      <main class="container">
+          <h1>Tarea Programada 4</h1>
+          <div class="grid">
+              <article>
+                  <header><b>Seleccionador</b></header>
+                  <fieldset>
+                      <label>
+                          <input id="pares" type="checkbox" role="switch" checked />
+                          Pares
+                      </label>
+                      <label>
+                          <input id="impares" type="checkbox" role="switch" checked />
+                          Impares
+                      </label>
+                      <label>
+                          <input id="primos" type="checkbox" role="switch" checked />
+                          Primos
+                      </label>
+                  </fieldset>
+              </article>
+              <article>
+                  <header><b>Números</b></header>
+                  <ul id="numeros"></ul>
+              </article>
+          </div>
+      </main>
+      <style>
+          .oculto {
+              display: none;
+          }
+      </style>
+      <script defer>
+          $(document).ready(() => {
+              // INICIO #1
+              const $numeros = $("#numeros");
+
+              for (let num = 1; num <= 100; num++) {
+                  let clase = (num % 2 === 0) ? "par" : "impar";
+                  $numeros.append(`<li id="${num}" class="${clase}">${num}</li>`);
+              }
+
+              $("#pares").on("change", function () {
+                  $(".par").toggleClass("oculto", !this.checked);
+              });
+              // FINAL #1
+
+              // INICIO #2
+              $("#impares").on("change", function () {
+                  $(".impar").toggleClass("oculto", !this.checked);
+              });
+              // FINAL #2
+
+              // INICIO #3
+              const esPrimo = Array(101).fill(true);
+              esPrimo[0] = esPrimo[1] = false;
+
+              for (let i = 2; i * i <= 100; i++) {
+                  if (esPrimo[i]) {
+                      for (let j = i * i; j <= 100; j += i) {
+                          esPrimo[j] = false;
+                      }
+                  }
+              }
+
+              for (let i = 2; i <= 100; i++) {
+                  if (esPrimo[i]) {
+                      $(`#${i}`).addClass("primo");
+                  }
+              }
+
+              $("#primos").on("change", function () {
+                  $(".primo").toggleClass("oculto", !this.checked);
+              });
+              // FINAL #3
+          });
+      </script>
+
+  </body>
+</html>
